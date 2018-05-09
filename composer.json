@@ -1,0 +1,14 @@
+{
+    "name": "neumann/dumpf",
+    "description": "Pretty formated var dump",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Neumann",
+            "email": "neumann@tonda.info"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+}
