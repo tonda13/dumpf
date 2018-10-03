@@ -6,6 +6,7 @@
  *
  * Change log:
  *  - added _e() method alias for echo();
+ *  - added _e() method alias for echo()
  *
  */
 
@@ -28,7 +29,12 @@ function _ex($str){
     exit;
 }
 
-
+/**
+* Alias for exit function
+*/
+function _x() {
+    exit;
+}
 
 /**
  * Call var_dump function wrapped with <pre> tag
