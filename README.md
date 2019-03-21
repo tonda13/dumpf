@@ -22,5 +22,19 @@ String = string (11): Some string
 Number = integer: 10
 ```
 
-## TO-DO
-* obalit některé metody do třídy, aby nešli volat přímo
+
+## How to call dev package through composer locally
+Add to composer.json following piece of config:
+```
+"repositories": {
+    "dumpf": {
+        "type": "path",
+        "url": "../dumpf",
+        "options": {
+            "symlink": true
+        }
+    }
+},
+```
+Then you can normally require
+`composer require morgo/dumpf @dev`
