@@ -1,19 +1,22 @@
 {
-    "name": "neumann/dumpf",
-    "description": "Pretty formated var dump",
+    "name": "morgo/dumpf",
+    "description": "Pretty formatted var_dump",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Neumann",
+            "name": "Antonin Neumann",
             "email": "neumann@tonda.info"
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "phpunit/phpunit": "^7.5"
+    },
     "autoload": {
         "psr-4": {
-            "Dumpf\\": "src/"
-        }
+            "Morgo\\": ["src/", "tests/"]
+        },
+        "files": ["etc/functions.php"]
     }
 }
