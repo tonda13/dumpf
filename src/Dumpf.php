@@ -19,9 +19,10 @@ class Dumpf
     // const EOL = "\n";
     const EOL = PHP_EOL;
 
-    // const SPECIAL_VAR = [
-    //
-    // ]
+    const TRUE_STRING = 'TRUE';
+    const FALSE_STRING = 'FALSE';
+    const NULL_STRING = 'NULL';
+    const EMPTY_STRING = 'EMPTY';
 
     public static function dumpf() : void {
         self::setUtf8EncodingHeader();
@@ -54,7 +55,7 @@ class Dumpf
                     echo(gettype($arg)." (".strlen($arg)."): <strong>".(empty($arg)?"EMPTY":$arg)."</strong>".self::EOL);
                 }
                 else {
-                    echo(gettype($arg).": <strong>".self::dumpSpecialVar($arg)."</strong>".self::EOL);
+                    echo(gettype($arg).": <strong>".self::specialToString($arg)."</strong>".self::EOL);
                 }
             }
         }
@@ -89,7 +90,7 @@ class Dumpf
                 }
                 else {
                     echo($tab.self::TAB."[<em>".$key."</em>] => "
-                            . "<strong>".self::dumpSpecialVar($item)."</strong> "
+                            . "<strong>".self::specialToString($item)."</strong> "
                             . "(<span class='dumpf variable-type'>".gettype($item)."</span>)".self::EOL);
                 }
             }
@@ -162,7 +163,7 @@ class Dumpf
                     self::dumpArray($var_value, $level+1, $var_name);
                 }else {
                     echo($tab.self::TAB."[<em>".$item->getName().$var_scope."</em>] => "
-                            . "<strong>".self::dumpSpecialVar($var_value)."</strong> "
+                            . "<strong>".self::specialToString($var_value)."</strong> "
                             . "(".gettype($var_value).")".self::EOL);
                 }
             }
@@ -186,25 +187,24 @@ class Dumpf
      *
      * @return string|int String if variable is type of boolean or $var
      */
-    private static function dumpSpecialVar($var) {
+    private static function specialToString($var) {
         $isBool = is_bool($var);
         if ($isBool && $var) {
-            return "TRUE";
+            return self::TRUE_STRING;
         }
         else if ($isBool) {
-            return "FALSE";
+            return self::FALSE_STRING;
         }
         else if (is_null($var) || !isset($var)) {
-            return "NULL";
+            return self::NULL_STRING;
         }
         else if (is_string($var) && empty($var)) {
-            return "EMPTY";
+            return self::EMPTY_STRING;
         }
         else {
             return $var;
         }
     }
-
 
     /**
      * Set encoding of Content-Type header to UTF-8
