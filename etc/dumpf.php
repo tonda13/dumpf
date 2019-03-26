@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Originial file containing function of Pretty dump
+ */
 
 /**
  * Alias for dumpf_pairs()

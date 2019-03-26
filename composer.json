@@ -17,6 +17,6 @@
         "psr-4": {
             "Morgo\\": ["src/", "tests/"]
         },
-        "files": ["etc/functions.php"]
+        "files": ["etc/functions.php", "etc/dumpf.php"]
     }
 }
