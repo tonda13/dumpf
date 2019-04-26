@@ -11,13 +11,13 @@ class DumpfTest extends TestCase
      * @return void
      */
     public function testSpecialToString() : void {
-        $conversionResult = $this->invokeStaticMethod('Morgo\Dumpf', 'specialToString', [TRUE]);
+        $conversionResult = $this->invokeStaticMethod('Morgo\Dumpf', 'specialToString', [true]);
         $this->assertEquals(Dumpf::TRUE_STRING, $conversionResult);
 
-        $conversionResult = $this->invokeStaticMethod('Morgo\Dumpf', 'specialToString', [FALSE]);
+        $conversionResult = $this->invokeStaticMethod('Morgo\Dumpf', 'specialToString', [false]);
         $this->assertEquals(Dumpf::FALSE_STRING, $conversionResult);
 
-        $conversionResult = $this->invokeStaticMethod('Morgo\Dumpf', 'specialToString', [NULL]);
+        $conversionResult = $this->invokeStaticMethod('Morgo\Dumpf', 'specialToString', [null]);
         $this->assertEquals(Dumpf::NULL_STRING, $conversionResult);
 
         $conversionResult = $this->invokeStaticMethod('Morgo\Dumpf', 'specialToString', ['']);
@@ -27,7 +27,7 @@ class DumpfTest extends TestCase
     /**
      * Call protected/private method of a class.
      *
-     * @param object $className  Class name that we will run method on.
+     * @param string $className  Class name that we will run method on.
      * @param string $methodName Method name to call
      * @param array  $parameters Array of parameters to pass into method.
      *
