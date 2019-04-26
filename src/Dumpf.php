@@ -16,7 +16,6 @@ class Dumpf
      * New line contant
      * @var string
      */
-    // const EOL = "\n";
     const EOL = PHP_EOL;
 
     const TRUE_STRING = 'TRUE';
@@ -43,18 +42,16 @@ class Dumpf
         foreach (func_get_args() as $arg) {
             if (is_array($arg)) {
                 self::dumpArray($arg, 1);
-            }
-            else if (is_object($arg)) {
+            } elseif (is_object($arg)) {
                 self::dumpObject($arg, 1);
-            }
-            else {
+            } else {
                 if (is_null($arg)) {
                     echo("<strong>NULL</strong>".self::EOL);
-                }
-                else if (is_string($arg)){
-                    echo(gettype($arg)." (".strlen($arg)."): <strong>".(empty($arg)?"EMPTY":$arg)."</strong>".self::EOL);
-                }
-                else {
+                } elseif (is_string($arg)) {
+                    echo(
+                        gettype($arg)." (".strlen($arg)."): <strong>".(empty($arg)?"EMPTY":$arg)."</strong>".self::EOL
+                    );
+                } else {
                     echo(gettype($arg).": <strong>".self::specialToString($arg)."</strong>".self::EOL);
                 }
             }
@@ -68,7 +65,7 @@ class Dumpf
      * @param int $level Level of nesting
      * @param string $key (optional) Jmeno promenne obsahujici zanorene pole
      */
-    private static function dumpArray($arr, $level, $key = NULL) {
+    private static function dumpArray($arr, $level, $key = null) {
         $tab = "";
         for ($i = 1; $i < $level; $i++) {
             $tab .= self::TAB;
@@ -84,19 +81,16 @@ class Dumpf
             foreach ($arr as $key => $item) {
                 if (is_array($item)) {
                     self::dumpArray($item, $level+1, $key);
-                }
-                else if(is_object($item)) {
+                } elseif (is_object($item)) {
                     self::dumpObject($item, $level+1, $key);
-                }
-                else {
+                } else {
                     echo($tab.self::TAB."[<em>".$key."</em>] => "
                             . "<strong>".self::specialToString($item)."</strong> "
                             . "(<span class='dumpf variable-type'>".gettype($item)."</span>)".self::EOL);
                 }
             }
             echo($tab."}".self::EOL);
-        }
-        else {
+        } else {
             echo("EMPTY");
             echo("}".self::EOL);
         }
@@ -109,9 +103,9 @@ class Dumpf
      * @param int $level Level of nesting
      * @param string $key (optional) Jmeno promenne obsahujici zanoreny objekt
      */
-    private static function dumpObject($obj, $level, $key = NULL) {
+    private static function dumpObject($obj, $level, $key = null) {
         $special_object_printers = array(
-            "Dibi\DateTime" => function($obj, $tab) {
+            "Dibi\DateTime" => function ($obj, $tab) {
                 echo($tab.self::TAB."<em>date: </em><strong>".$obj->format("d. m. Y H:i:s")."</strong>".self::EOL);
                 echo($tab.self::TAB."<em>timezone: </em><strong>".$obj->format("e P")."</strong>".self::EOL);
                 echo($tab.self::TAB."<em>timestap: </em><strong>".$obj->format("U")."</strong>".self::EOL);
@@ -119,59 +113,57 @@ class Dumpf
         );
 
         $tab = '';
-        for($i = 1; $i < $level; $i++){
+        for ($i = 1; $i < $level; $i++) {
             $tab .= self::TAB;
         }
         echo($tab);
-        if(isset($key)){
+        if (isset($key)) {
             echo('['.$key.'] => ');
         }
 
-        $reflect = new ReflectionClass($obj);
+        $reflect = new \ReflectionClass($obj);
         $properties = $reflect->getProperties();
 
         // blue: #016FD9, red: #D42A2A, yellow: #f1c40f
         echo("object <strong style='color: #D42A2A;' class='dumpf object-name'>" . get_class($obj) . "</strong> {");
 
-        if(array_key_exists(get_class($obj), $special_object_printers)) {
+        if (array_key_exists(get_class($obj), $special_object_printers)) {
             echo(self::EOL);
             $special_object_printers[get_class($obj)]($obj, $tab);
             echo($tab."}".self::EOL);
-        }
-        else if(count($properties) > 0){
+        } elseif (count($properties) > 0) {
             echo(self::EOL);
-            foreach($properties as $item){
+            foreach ($properties as $item) {
                 $var_name = $item->getName();
                 $var = $reflect->getProperty($var_name);
                 $var->setAccessible(true);
                 $var_value = $var->getValue($obj);
 
                 $var_scope = "";
-                if($var->isPrivate()){
+                if ($var->isPrivate()) {
                     $var_scope = ":<span style='color: red;'>private</span>";
-                }else if($var->isProtected()){
+                } elseif ($var->isProtected()) {
                     $var_scope = ":<span style='color: orange;'>protected</span>";
-                }else if($var->isStatic()){
+                } elseif ($var->isStatic()) {
                     $var_scope = ":<span style='color: blue;'>static</span>";
-                }else {
+                } else {
                     $var_scope = ":<span style='color: green;'>public</span>";
                 }
 
-                if(is_object($var_value)){
+                if (is_object($var_value)) {
                     self::dumpObject($var_value, $level+1, $var_name);
-                }else if(is_array($var_value)){
+                } elseif (is_array($var_value)) {
                     self::dumpArray($var_value, $level+1, $var_name);
-                }else {
+                } else {
                     echo($tab.self::TAB."[<em>".$item->getName().$var_scope."</em>] => "
                             . "<strong>".self::specialToString($var_value)."</strong> "
                             . "(".gettype($var_value).")".self::EOL);
                 }
             }
             echo($tab . '}' . self::EOL);
-        }
-        else {
+        } else {
             echo(self::EOL);
-            dumpArray($obj, $level+1);
+            self::dumpObject($obj, $level+1);
             // $methods = get_class_methods($obj);
             // foreach ($methods as $method) {
             //     echo($tab . self::TAB . $method . '()' . self::EOL);
@@ -191,17 +183,13 @@ class Dumpf
         $isBool = is_bool($var);
         if ($isBool && $var) {
             return self::TRUE_STRING;
-        }
-        else if ($isBool) {
+        } elseif ($isBool) {
             return self::FALSE_STRING;
-        }
-        else if (is_null($var) || !isset($var)) {
+        } elseif (is_null($var) || !isset($var)) {
             return self::NULL_STRING;
-        }
-        else if (is_string($var) && empty($var)) {
+        } elseif (is_string($var) && empty($var)) {
             return self::EMPTY_STRING;
-        }
-        else {
+        } else {
             return $var;
         }
     }

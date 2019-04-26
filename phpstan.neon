@@ -1,0 +1,7 @@
+# Configuration file for PHPStan
+
+parameters:
+    level: 7
+    paths:
+        - src/
+        - tests/
