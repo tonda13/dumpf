@@ -25,7 +25,7 @@ class Dumpf
     const EMPTY_STRING = 'EMPTY';
 
     public static function dumpf() : void {
-        self::setUtf8EncodingHeader();
+        Utils::setUtf8EncodingHeader();
         if (func_num_args() <= 0) {
             return;
         }
@@ -39,7 +39,7 @@ class Dumpf
      *
      * @return void
      */
-    private static function dumpVar() : void {
+    public static function dumpVar() : void {
         foreach (func_get_args() as $arg) {
             if (is_array($arg)) {
                 self::dumpArray($arg, 1);
@@ -127,7 +127,7 @@ class Dumpf
             echo('['.$key.'] => ');
         }
 
-        $reflect = new ReflectionClass($obj);
+        $reflect = new \ReflectionClass($obj);
         $properties = $reflect->getProperties();
 
         // blue: #016FD9, red: #D42A2A, yellow: #f1c40f
@@ -171,7 +171,7 @@ class Dumpf
         }
         else {
             echo(self::EOL);
-            dumpArray($obj, $level+1);
+            self::dumpArray($obj, $level+1);
             // $methods = get_class_methods($obj);
             // foreach ($methods as $method) {
             //     echo($tab . self::TAB . $method . '()' . self::EOL);
@@ -203,16 +203,6 @@ class Dumpf
         }
         else {
             return $var;
-        }
-    }
-
-    /**
-     * Set encoding of Content-Type header to UTF-8
-     * @return void
-     */
-    private static function setUtf8EncodingHeader() : void {
-        if (!headers_sent()) {
-            header('Content-Type: text/html; charset=utf-8');
         }
     }
 }
