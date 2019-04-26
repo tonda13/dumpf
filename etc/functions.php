@@ -5,6 +5,14 @@
  */
 
 /**
+ * Function for testing, like breakpoint somewhere
+ */
+function _stop() {
+    echo random_int(1000, 10000);
+    die;
+}
+
+/**
  * Alias for echo() function
  */
 function _e($str) {
@@ -60,7 +68,7 @@ function pre_dump(){
 }
 
 /**
- * Dumpf to strign
+ * Dumpf to string
  */
 function _sd() {
     ob_start();
