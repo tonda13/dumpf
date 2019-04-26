@@ -3,52 +3,6 @@
  * Originial file containing function of Pretty dump
  */
 
-/**
- * Alias for dumpf_pairs()
- */
-function _dp(){
-    call_user_func_array("dumpf_pairs", func_get_args());
-}
-
-/**
- * Alias for dumpf_pairs() with call exit() at last
- */
-function _dpx(){
-    call_user_func_array("dumpf_pairs", func_get_args());
-    exit();
-}
-
-/**
- * Print rich value of variable(s)
- * Prvni parametr je jmeno a druhy promenna
- * Vypise jmeno = promenna
- * @param mixed $expression (one or more)
- */
-function dumpf_pairs() {
-    set_utf8_encoding_header();
-    if(func_num_args() <= 0) {
-        return;
-    }
-    $broken = false;
-    echo("<pre>");
-    foreach (func_get_args() as $k => $arg) {
-        if(!$broken && $k%2 == 0){
-            if(is_string($arg)){
-                echo("<span style='color: blue;'>" . $arg."</span> = ");
-            }else {
-                echo("<span style='color: red;'>!-- Pairs dumpf is broken. --!</span>\n");
-                $broken = true;
-                dumpf_var($arg);
-            }
-        }else {
-            dumpf_var($arg);
-        }
-    }
-    echo("</pre>");
-}
-
-
-
 /*
 === BREAK POINTS ===
 */

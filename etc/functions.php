@@ -69,3 +69,19 @@ function _sd() {
     ob_end_clean();
     return $output;
 }
+
+
+ /**
+  * Alias for DumpfPair::dump()
+  */
+ function _dp(){
+     forward_static_call_array(['Morgo\DumpfPair', 'dump'], func_get_args());
+ }
+
+/**
+ * Alias for dumpf_pairs() with call exit() at last
+ */
+function _dpx(){
+    forward_static_call_array(['Morgo\DumpfPair', 'dump'], func_get_args());
+    exit();
+}
