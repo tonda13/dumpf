@@ -39,7 +39,7 @@ function _x() {
  */
 function _dcx() {
     while(ob_end_clean());
-    forward_static_call_array(['Morgo\Dumpf', 'dumpf'], func_get_args());
+    forward_static_call_array(['Morgo\Dumpf', 'dump'], func_get_args());
     exit();
 }
 
@@ -47,7 +47,7 @@ function _dcx() {
  * Alias for dumpf() with call exit() at last
  */
 function _dx() {
-    forward_static_call_array(['Morgo\Dumpf', 'dumpf'], func_get_args());
+    forward_static_call_array(['Morgo\Dumpf', 'dump'], func_get_args());
     exit();
 }
 
@@ -55,7 +55,7 @@ function _dx() {
  * Alias for dumpf()
  */
 function _d(){
-    forward_static_call_array(['Morgo\Dumpf', 'dumpf'], func_get_args());
+    forward_static_call_array(['Morgo\Dumpf', 'dump'], func_get_args());
 }
 
 /**
@@ -72,7 +72,7 @@ function pre_dump(){
  */
 function _sd() {
     ob_start();
-    forward_static_call_array(['Morgo\Dumpf', 'dumpf'], func_get_args());
+    forward_static_call_array(['Morgo\Dumpf', 'dump'], func_get_args());
     $output = ob_get_contents();
     ob_end_clean();
     return $output;

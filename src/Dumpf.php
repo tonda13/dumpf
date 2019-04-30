@@ -23,7 +23,7 @@ class Dumpf
     const NULL_STRING = 'NULL';
     const EMPTY_STRING = 'EMPTY';
 
-    public static function dumpf() : void {
+    public static function dump() : void {
         Utils::setUtf8EncodingHeader();
         if (func_num_args() <= 0) {
             return;

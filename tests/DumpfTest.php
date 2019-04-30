@@ -2,6 +2,8 @@
 namespace Morgo;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use Morgo\Dumpf;
 
 class DumpfTest extends TestCase
 {
@@ -11,16 +13,17 @@ class DumpfTest extends TestCase
      * @return void
      */
     public function testSpecialToString() : void {
-        $conversionResult = $this->invokeStaticMethod('Morgo\Dumpf', 'specialToString', [true]);
+        Dumpf::dump('a');
+        $conversionResult = $this->invokeStaticMethod(Dumpf::class, 'specialToString', [true]);
         $this->assertEquals(Dumpf::TRUE_STRING, $conversionResult);
 
-        $conversionResult = $this->invokeStaticMethod('Morgo\Dumpf', 'specialToString', [false]);
+        $conversionResult = $this->invokeStaticMethod(Dumpf::class, 'specialToString', [false]);
         $this->assertEquals(Dumpf::FALSE_STRING, $conversionResult);
 
-        $conversionResult = $this->invokeStaticMethod('Morgo\Dumpf', 'specialToString', [null]);
+        $conversionResult = $this->invokeStaticMethod(Dumpf::class, 'specialToString', [null]);
         $this->assertEquals(Dumpf::NULL_STRING, $conversionResult);
 
-        $conversionResult = $this->invokeStaticMethod('Morgo\Dumpf', 'specialToString', ['']);
+        $conversionResult = $this->invokeStaticMethod(Dumpf::class, 'specialToString', ['']);
         $this->assertEquals(Dumpf::EMPTY_STRING, $conversionResult);
     }
 
@@ -33,8 +36,8 @@ class DumpfTest extends TestCase
      *
      * @return mixed Method return.
      */
-    public function invokeStaticMethod($className, $methodName, array $parameters = array()) {
-        $reflection = new \ReflectionClass($className);
+    public function invokeStaticMethod(string $className, string $methodName, array $parameters = array()) {
+        $reflection = new ReflectionClass($className);
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
