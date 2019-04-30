@@ -1,11 +1,12 @@
 # dumpf
-Pretty var_dump and break points functions
+Pretty dump variables library. Easy to use with global shortcut function aliases.
 
 ## Usage
-`dumpf($var1, $var2, ...)` or `_d($var1, $var2, ...)`
-or `_dx()` for call `exit()` in the end
+```php
+Morgo\Dumpf::dump($x, $y);
 
-`dumpf_pairs("name", $variable, ...)` or `_dp("name", $variable, ...)`
+Morgo\DumpfPair::dump('label_for_x', $x)
+```
 
 ## Examples
 ```php
