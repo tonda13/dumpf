@@ -7,7 +7,10 @@ namespace Morgo;
 class DumpfPair
 {
     /**
-     * [dumpf description]
+     * Prety dump variables with labels
+     *
+     * @param array Key-Value pairs
+     *
      * @return void
      */
     public static function dump() {
@@ -15,19 +18,17 @@ class DumpfPair
         if(func_num_args() <= 0) {
             return;
         }
-        $broken = false;
+
         echo('<pre>');
         foreach (func_get_args() as $k => $arg) {
-            if (!$broken && $k%2 == 0) {
-                if (is_string($arg)) {
-                    echo('<span style="color: blue;">' . $arg . '</span> = ');
-                } else {
-                    echo('<span style="color: red;">!-- Pairs dumpf is broken. --!</span>' . PHP_EOL);
-                    $broken = true;
-                    Dumpf::dumpVar($arg);
+            if (is_array($arg)) {
+                foreach ($arg as $key => $value) {
+                    echo('<span style="color: blue;">' . $key . '</span> = ');
+                    Dumpf::dumpVar($value);
                 }
-            } else {
-                Dumpf::dumpVar($arg);
+            }
+            else {
+                echo('<span style="color: red;">!-- Wrong format --!</span>' . PHP_EOL);
             }
         }
         echo('</pre>');
