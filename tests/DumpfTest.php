@@ -1,9 +1,11 @@
 <?php
+declare(strict_types = 1);
+
 namespace Morgo;
 
 use PHPUnit\Framework\TestCase;
 
-class DumpfTest extends TestCase
+final class DumpfTest extends TestCase
 {
     /**
      * Test conversion of some special variables to their string representation
