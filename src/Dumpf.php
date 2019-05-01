@@ -163,11 +163,7 @@ class Dumpf
             echo($tab . '}' . self::EOL);
         } else {
             echo(self::EOL);
-            self::dumpObject($obj, $level+1);
-            // $methods = get_class_methods($obj);
-            // foreach ($methods as $method) {
-            //     echo($tab . self::TAB . $method . '()' . self::EOL);
-            // }
+            self::dumpArray((array)$obj, $level+1);
             echo($tab.'}' . self::EOL);
         }
     }
