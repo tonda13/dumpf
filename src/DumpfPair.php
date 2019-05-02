@@ -9,7 +9,7 @@ class DumpfPair
     /**
      * Prety dump variables with labels
      *
-     * @param array Key-Value pairs
+     * param array Key-Value pairs
      *
      * @return void
      */
